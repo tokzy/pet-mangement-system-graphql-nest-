@@ -28,7 +28,6 @@ export class User {
   @Column({ nullable: true })
   imagePath?: string;
 
-  @Field()
   @Column({ select: false })
   password?: string;
 }

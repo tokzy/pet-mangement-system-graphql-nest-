@@ -5,6 +5,7 @@ import { LoginInput } from './dto/logininput.dto';
 import { LoginToken } from './dto/logintoken.dto';
 import { User } from './entities/user.entity';
 import { GqlAuthGuard } from './guards/gql-auth.guards';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Resolver()
 export class AuthResolver {
@@ -16,8 +17,9 @@ export class AuthResolver {
     return this.authservice.login(LoginInput);
   }
 
-  @Query(() => User)
-  async getAllUsers(): Promise<User> {
+  @Query(() => [User])
+  @UseGuards(JwtAuthGuard)
+  async getAllUsers(): Promise<User[]> {
     return this.authservice.getAllUsers();
   }
 }

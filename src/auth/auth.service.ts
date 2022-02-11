@@ -5,6 +5,7 @@ import { LoginInput } from './dto/logininput.dto';
 import { LoginToken } from './dto/logintoken.dto';
 import { User } from './entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
+import { isEmpty } from 'lodash';
 
 @Injectable()
 export class AuthService {
@@ -27,12 +28,21 @@ export class AuthService {
     });
   }
 
-  public async getAllUsers(): Promise<User> {
-    const user = new User();
-    return user;
+  public async getAllUsers(): Promise<User[]> {
+    return await this.userRepository.find().then((users) => { 
+     let data = []; 
+     users.forEach((user) => {
+     const {imagePath} = user;
+     if(!isEmpty(imagePath)){
+     user.imagePath = process.env.baseUrl+""+imagePath;     
+     }
+     data.push(user);
+     })
+     return data; 
+    });
   }
 
-  public async validateUser(username: string, password: string): Promise<any> {
+  public async validateUser(username: string, password: string): Promise<User> {
     const user = await this.userRepository.findOne(
       { phone: username },
       {
