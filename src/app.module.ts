@@ -8,13 +8,13 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, 
+      isGlobal: true,
     }),
     GraphQLModule.forRoot({
       debug: true,
       playground: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      sortSchema: true,  
+      sortSchema: true,
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -26,7 +26,8 @@ import { AuthModule } from './auth/auth.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    AuthModule],
+    AuthModule,
+  ],
   controllers: [],
   providers: [],
 })

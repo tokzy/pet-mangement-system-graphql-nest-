@@ -1,0 +1,30 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input LoginInput {
+  password: String!
+  phone: String!
+}
+
+type LoginToken {
+  accessToken: String!
+}
+
+type Mutation {
+  Login(LoginInput: LoginInput!): LoginToken!
+}
+
+type Query {
+  getAllUsers: User!
+}
+
+type User {
+  email: String!
+  firstName: String!
+  id: Int!
+  imagePath: String
+  lastName: String!
+  password: String!
+  phone: String!
+}
