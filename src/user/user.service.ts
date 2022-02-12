@@ -5,6 +5,8 @@ import { Repository } from 'typeorm';
 import { isEmpty } from 'lodash';
 import { UserUpdateInput } from './dto/user-update-input.dto';
 import { UpdateResponse } from './dto/user-update-response';
+import { deleteResponse } from './dto/user-delete-response.dto';
+import { UserDeleteInput } from './dto/user-delete-input.dto';
 
 @Injectable()
 export class UserService {
@@ -42,4 +44,16 @@ export class UserService {
         }
       })
   }
+
+public async deleteUser(userInput:UserDeleteInput): Promise<deleteResponse>{
+  const {id} = userInput;
+  return this.usersRepository.delete(id).then((result) =>{
+      if(result){
+     return {response:"success"} 
+      }else{
+        throw new HttpException("data not deleted",HttpStatus.INTERNAL_SERVER_ERROR);    
+      }
+  });  
+}
+
 }

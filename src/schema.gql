@@ -15,6 +15,7 @@ type Mutation {
   Login(LoginInput: LoginInput!): LoginToken!
   RegisterUser(RegInput: RegInput!): RegResponse!
   UpdateUser(UserUpdateInput: UserUpdateInput!): UpdateResponse!
+  deleteUser(UserdeleteInput: UserDeleteInput!): deleteResponse!
 }
 
 type Query {
@@ -51,9 +52,17 @@ type User {
   phone: String!
 }
 
+input UserDeleteInput {
+  id: Int!
+}
+
 input UserUpdateInput {
   email: String!
   firstName: String!
   id: Int!
   lastName: String!
+}
+
+type deleteResponse {
+  response: String!
 }
