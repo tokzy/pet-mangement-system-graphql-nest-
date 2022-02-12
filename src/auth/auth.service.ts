@@ -6,6 +6,8 @@ import { LoginToken } from './dto/logintoken.dto';
 import { User } from './entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { isEmpty } from 'lodash';
+import * as bcrypt from 'bcrypt';
+import { RegInput } from './dto/register-input.dto';
 
 @Injectable()
 export class AuthService {
@@ -14,6 +16,10 @@ export class AuthService {
     private readonly userRepository: Repository<User>,
     private jwtservice: JwtService,
   ) {}
+
+  private async hashPassword(password: string): Promise<string> {
+    return await bcrypt.hash(password, 12);
+  }
 
   public async login(Logininput: LoginInput): Promise<LoginToken> {
     const { phone, password } = Logininput;
@@ -29,16 +35,16 @@ export class AuthService {
   }
 
   public async getAllUsers(): Promise<User[]> {
-    return await this.userRepository.find().then((users) => { 
-     let data = []; 
-     users.forEach((user) => {
-     const {imagePath} = user;
-     if(!isEmpty(imagePath)){
-     user.imagePath = process.env.baseUrl+""+imagePath;     
-     }
-     data.push(user);
-     })
-     return data; 
+    return await this.userRepository.find().then((users) => {
+      let data = [];
+      users.forEach((user) => {
+        const { imagePath } = user;
+        if (!isEmpty(imagePath)) {
+          user.imagePath = process.env.baseUrl + '' + imagePath;
+        }
+        data.push(user);
+      });
+      return data;
     });
   }
 
@@ -57,10 +63,54 @@ export class AuthService {
         ],
       },
     );
-    if (user && user.password == password) {
-      const { password, ...result } = user;
-      return result;
+    if (user) {
+      return await bcrypt.compare(password, user.password).then((value) => {
+        if (value) {
+          const { password, ...result } = user;
+          return result;
+        } else {
+          return null;
+        }
+      });
     }
     return null;
+  }
+
+  public async checkIfUserExists(user: RegInput): Promise<boolean> {
+    const { email } = user;
+    return await this.userRepository.count({ email: email }).then((count) => {
+      if (count > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+
+  public async Register(userRegInput: RegInput): Promise<any> {
+    const { firstName, lastName, email, phone, imagePath, password } =
+      userRegInput;
+
+    return await this.checkIfUserExists(userRegInput).then(async (check) => {
+      if (check == true) {
+        return new HttpException('User Already Exists', HttpStatus.BAD_REQUEST);
+      } else {
+        return await this.hashPassword(password).then((password) => {
+          return this.userRepository
+            .save({
+              firstName,
+              lastName,
+              phone,
+              email,
+              password,
+              imagePath,
+            })
+            .then((newUser) => {
+              const { password, ...data } = newUser;
+              return data;
+            });
+        });
+      }
+    });
   }
 }

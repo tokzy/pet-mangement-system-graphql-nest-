@@ -13,10 +13,28 @@ type LoginToken {
 
 type Mutation {
   Login(LoginInput: LoginInput!): LoginToken!
+  RegisterUser(RegInput: RegInput!): RegResponse!
 }
 
 type Query {
   getAllUsers: [User!]!
+}
+
+input RegInput {
+  email: String!
+  firstName: String!
+  imagePath: String
+  lastName: String!
+  password: String!
+  phone: String!
+}
+
+type RegResponse {
+  email: String!
+  firstName: String!
+  imagePath: String
+  lastName: String!
+  phone: String!
 }
 
 type User {
