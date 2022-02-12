@@ -8,6 +8,9 @@ import { JwtService } from '@nestjs/jwt';
 import { isEmpty } from 'lodash';
 import * as bcrypt from 'bcrypt';
 import { RegInput } from './dto/register-input.dto';
+import * as fs from 'fs/promises';
+import * as randstring from 'randomstring';
+import { join } from 'path';
 
 @Injectable()
 export class AuthService {
@@ -87,6 +90,27 @@ export class AuthService {
     });
   }
 
+
+  private async addProfileImage(imageString: string): Promise<string> {
+    const directory = process.cwd() + '/public/images';
+    let newPath: string;
+    let imageName: string;
+    let finalPath: string;
+
+    if (!isEmpty(imageString)) {
+      const buffer = Buffer.from(imageString, 'base64');
+      imageName = randstring.generate(7) + '.jpeg';
+      newPath = join(directory, imageName);
+      await fs.writeFile(newPath, buffer);
+      finalPath = 'images/' + imageName;
+    } else {
+      finalPath = imageString;
+    }
+
+    return finalPath;
+  }
+
+
   public async Register(userRegInput: RegInput): Promise<any> {
     const { firstName, lastName, email, phone, imagePath, password } =
       userRegInput;
@@ -95,8 +119,9 @@ export class AuthService {
       if (check == true) {
         return new HttpException('User Already Exists', HttpStatus.BAD_REQUEST);
       } else {
-        return await this.hashPassword(password).then((password) => {
-          return this.userRepository
+        return await this.hashPassword(password).then( async (password) => {
+          return await this.addProfileImage(imagePath).then(async (imagePath) => {
+            return await this.userRepository
             .save({
               firstName,
               lastName,
@@ -106,9 +131,12 @@ export class AuthService {
               imagePath,
             })
             .then((newUser) => {
-              const { password, ...data } = newUser;
+              const { password,...data } = newUser;
+              data.imagePath = process.env.baseUrl+""+newUser.imagePath;
               return data;
             });
+          });
+          
         });
       }
     });
