@@ -6,12 +6,13 @@ import { isEmpty } from 'lodash';
 
 @Injectable()
 export class UserService {
-   constructor(@InjectRepository(User) private readonly usersRepository:Repository<User>){} 
+  constructor(
+    @InjectRepository(User) private readonly usersRepository: Repository<User>,
+  ) {}
 
-
-   public async getAllUsers(): Promise<User[]> {
+  public async getAllUsers(): Promise<User[]> {
     return await this.usersRepository.find().then((users) => {
-      let data = [];
+      const data = [];
       users.forEach((user) => {
         const { imagePath } = user;
         if (!isEmpty(imagePath)) {
@@ -22,5 +23,4 @@ export class UserService {
       return data;
     });
   }
-
 }

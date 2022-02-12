@@ -76,7 +76,6 @@ export class AuthService {
     });
   }
 
-
   private async addProfileImage(imageString: string): Promise<string> {
     const directory = process.cwd() + '/public/images';
     let newPath: string;
@@ -96,7 +95,6 @@ export class AuthService {
     return finalPath;
   }
 
-
   public async Register(userRegInput: RegInput): Promise<any> {
     const { firstName, lastName, email, phone, imagePath, password } =
       userRegInput;
@@ -105,24 +103,25 @@ export class AuthService {
       if (check == true) {
         return new HttpException('User Already Exists', HttpStatus.BAD_REQUEST);
       } else {
-        return await this.hashPassword(password).then( async (password) => {
-          return await this.addProfileImage(imagePath).then(async (imagePath) => {
-            return await this.userRepository
-            .save({
-              firstName,
-              lastName,
-              phone,
-              email,
-              password,
-              imagePath,
-            })
-            .then((newUser) => {
-              const { password,...data } = newUser;
-              data.imagePath = process.env.baseUrl+""+newUser.imagePath;
-              return data;
-            });
-          });
-          
+        return await this.hashPassword(password).then(async (password) => {
+          return await this.addProfileImage(imagePath).then(
+            async (imagePath) => {
+              return await this.userRepository
+                .save({
+                  firstName,
+                  lastName,
+                  phone,
+                  email,
+                  password,
+                  imagePath,
+                })
+                .then((newUser) => {
+                  const { password, ...data } = newUser;
+                  data.imagePath = process.env.baseUrl + '' + newUser.imagePath;
+                  return data;
+                });
+            },
+          );
         });
       }
     });
