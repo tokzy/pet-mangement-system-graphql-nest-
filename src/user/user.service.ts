@@ -4,6 +4,7 @@ import { User } from '../auth/entities/user.entity';
 import { Repository } from 'typeorm';
 import { isEmpty } from 'lodash';
 import { UserUpdateInput } from './dto/user-update-input.dto';
+import { UpdateResponse } from './dto/user-update-response';
 
 @Injectable()
 export class UserService {
@@ -25,7 +26,7 @@ export class UserService {
     });
   }
 
-  public async UpdateUsers(userInput: UserUpdateInput): Promise<any> {
+  public async UpdateUsers(userInput: UserUpdateInput): Promise<UpdateResponse> {
     const { id, email, firstName, lastName } = userInput;
     return await this.usersRepository
       .update(id, {
@@ -36,10 +37,9 @@ export class UserService {
       .then((result) => {
         if (result) {
           return { response: 'success' };
+        }else{
+         throw new HttpException("data not updated",HttpStatus.INTERNAL_SERVER_ERROR);
         }
       })
-      .catch((error) => {
-        throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
-      });
   }
 }
