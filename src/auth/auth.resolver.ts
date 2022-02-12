@@ -1,11 +1,10 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
 import { LoginInput } from './dto/logininput.dto';
 import { LoginToken } from './dto/logintoken.dto';
 import { RegInput } from './dto/register-input.dto';
 import { RegResponse } from './dto/register-response.dto';
-import { User } from './entities/user.entity';
 import { GqlAuthGuard } from './guards/gql-auth.guards';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
@@ -17,12 +16,6 @@ export class AuthResolver {
   @UseGuards(GqlAuthGuard)
   async Login(@Args('LoginInput') LoginInput: LoginInput): Promise<LoginToken> {
     return this.authservice.login(LoginInput);
-  }
-
-  @Query(() => [User])
-  @UseGuards(JwtAuthGuard)
-  async getAllUsers(): Promise<User[]> {
-    return this.authservice.getAllUsers();
   }
 
   @Mutation(() => RegResponse)
