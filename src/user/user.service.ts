@@ -16,7 +16,7 @@ export class UserService {
 
   public async getAllUsers(): Promise<User[]> {
     return await this.usersRepository.find().then((users) => {
-      let data = [];
+      const data = [];
       users.forEach((user) => {
         const { imagePath } = user;
         if (!isEmpty(imagePath)) {
@@ -28,7 +28,9 @@ export class UserService {
     });
   }
 
-  public async UpdateUsers(userInput: UserUpdateInput): Promise<UpdateResponse> {
+  public async UpdateUsers(
+    userInput: UserUpdateInput,
+  ): Promise<UpdateResponse> {
     const { id, email, firstName, lastName } = userInput;
     return await this.usersRepository
       .update(id, {
@@ -39,21 +41,26 @@ export class UserService {
       .then((result) => {
         if (result) {
           return { response: 'success' };
-        }else{
-         throw new HttpException("data not updated",HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+          throw new HttpException(
+            'data not updated',
+            HttpStatus.INTERNAL_SERVER_ERROR,
+          );
         }
-      })
+      });
   }
 
-public async deleteUser(userInput:UserDeleteInput): Promise<deleteResponse>{
-  const {id} = userInput;
-  return this.usersRepository.delete(id).then((result) =>{
-      if(result){
-     return {response:"success"} 
-      }else{
-        throw new HttpException("data not deleted",HttpStatus.INTERNAL_SERVER_ERROR);    
+  public async deleteUser(userInput: UserDeleteInput): Promise<deleteResponse> {
+    const { id } = userInput;
+    return this.usersRepository.delete(id).then((result) => {
+      if (result) {
+        return { response: 'success' };
+      } else {
+        throw new HttpException(
+          'data not deleted',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
       }
-  });  
-}
-
+    });
+  }
 }

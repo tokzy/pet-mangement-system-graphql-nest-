@@ -28,8 +28,9 @@ export class UserResolver {
 
   @Mutation(() => deleteResponse)
   @UseGuards(JwtAuthGuard)
-  async deleteUser(@Args("UserdeleteInput") UserdeleteInput: UserDeleteInput):Promise<deleteResponse>{
-   return this.userService.deleteUser(UserdeleteInput);
+  async deleteUser(
+    @Args('UserdeleteInput') UserdeleteInput: UserDeleteInput,
+  ): Promise<deleteResponse> {
+    return this.userService.deleteUser(UserdeleteInput);
   }
-
 }
