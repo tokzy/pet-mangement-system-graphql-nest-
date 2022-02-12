@@ -14,6 +14,7 @@ type LoginToken {
 type Mutation {
   Login(LoginInput: LoginInput!): LoginToken!
   RegisterUser(RegInput: RegInput!): RegResponse!
+  UpdateUser(UserUpdateInput: UserUpdateInput!): UpdateResponse!
 }
 
 type Query {
@@ -37,6 +38,10 @@ type RegResponse {
   phone: String!
 }
 
+type UpdateResponse {
+  response: String!
+}
+
 type User {
   email: String!
   firstName: String!
@@ -44,4 +49,11 @@ type User {
   imagePath: String
   lastName: String!
   phone: String!
+}
+
+input UserUpdateInput {
+  email: String!
+  firstName: String!
+  id: Int!
+  lastName: String!
 }
