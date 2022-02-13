@@ -34,7 +34,9 @@ type Pet {
 }
 
 type Query {
+  getAllPets: [Pet!]!
   getAllUsers: [User!]!
+  getOnePet(id: Int!): Pet!
   getOneUser(id: Int!): User!
 }
 

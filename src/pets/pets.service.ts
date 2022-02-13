@@ -5,6 +5,7 @@ import { CreatePetInput } from './dto/create-pet-input.dto';
 import { Pet } from './entities/pet.entitiy';
 import { isEmpty } from 'lodash';
 import { UserService } from '../user/user.service';
+import { User } from 'src/auth/entities/user.entity';
 
 @Injectable()
 export class PetsService {
@@ -34,4 +35,17 @@ export class PetsService {
       }
     });
   }
+
+  public async getOneUser(userId:number):Promise<User>{
+     return this.userService.getOneUser(userId); 
+  }
+
+ public async getAllPets():Promise<Pet[]>{
+ return await this.petRepository.find();
+ } 
+
+public async getSinglePet(petId: number):Promise<Pet>{
+    return await this.petRepository.findOne(petId);
+}
+
 }
