@@ -18,6 +18,14 @@ type Mutation {
   deleteUser(UserdeleteInput: UserDeleteInput!): deleteResponse!
 }
 
+type Pet {
+  id: Int!
+  petColor: String
+  petName: String!
+  user: User
+  userId: Int!
+}
+
 type Query {
   getAllUsers: [User!]!
 }
@@ -49,6 +57,7 @@ type User {
   id: Int!
   imagePath: String
   lastName: String!
+  pets: [Pet!]
   phone: String!
 }
 

@@ -17,6 +17,11 @@ export class Pet {
   @Column({nullable:true})
   petColor: string;
 
+  @Field(() => Int)
+  @Column()
+  userId: number
+
   @ManyToOne(() => User,user => user.pets)
-  user:User
+  @Field(() => User,{nullable:true})
+  user?:User
 }
