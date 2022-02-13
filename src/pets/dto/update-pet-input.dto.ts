@@ -6,7 +6,7 @@ export class updatePetInput {
   @Field()
   @IsNotEmpty()
   @IsNumber()
-  id:number
+  id: number;
 
   @Field()
   @IsNotEmpty()

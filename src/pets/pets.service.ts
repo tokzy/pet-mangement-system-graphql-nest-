@@ -47,18 +47,24 @@ export class PetsService {
     return await this.petRepository.findOne(petId);
   }
 
-  public async updatePets(updatePetInput:updatePetInput):Promise<updatePetResponse>{
-   const {id,userId,petName,petColor} = updatePetInput;
-   return await this.petRepository.update(id,{userId:userId,petName:petName,petColor}).then((res) => {
-    if(res){
-     return {response:"success"};
-    }else{
-     return {response:"update failed"};
-    } 
-   }).catch((err) =>{
-    throw new HttpException("unable to update",HttpStatus.INTERNAL_SERVER_ERROR);
-   });
+  public async updatePets(
+    updatePetInput: updatePetInput,
+  ): Promise<updatePetResponse> {
+    const { id, userId, petName, petColor } = updatePetInput;
+    return await this.petRepository
+      .update(id, { userId: userId, petName: petName, petColor })
+      .then((res) => {
+        if (res) {
+          return { response: 'success' };
+        } else {
+          return { response: 'update failed' };
+        }
+      })
+      .catch((err) => {
+        throw new HttpException(
+          'unable to update',
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      });
   }
-
-
 }
