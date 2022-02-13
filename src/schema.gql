@@ -23,6 +23,7 @@ type Mutation {
   RegisterUser(RegInput: RegInput!): RegResponse!
   UpdateUser(UserUpdateInput: UserUpdateInput!): UpdateResponse!
   deleteUser(UserdeleteInput: UserDeleteInput!): deleteResponse!
+  updatePets(updatePetInput: updatePetInput!): updatePetResponse!
 }
 
 type Pet {
@@ -83,5 +84,16 @@ input UserUpdateInput {
 }
 
 type deleteResponse {
+  response: String!
+}
+
+input updatePetInput {
+  id: Float!
+  petColor: String!
+  petName: String!
+  userId: Float!
+}
+
+type updatePetResponse {
   response: String!
 }
