@@ -63,4 +63,17 @@ export class UserService {
       }
     });
   }
+
+  public async getOneUser(userId:number):Promise<User>{
+   return await this.usersRepository.findOne({id:userId}).then((user)=>{
+     const{imagePath} = user;
+     if(!isEmpty(imagePath)){
+     user.imagePath = process.env.baseUrl+""+imagePath;
+     }
+    return user; 
+   }).catch((err) => {
+    throw new HttpException(err,HttpStatus.INTERNAL_SERVER_ERROR); 
+   }); 
+  }
+
 }

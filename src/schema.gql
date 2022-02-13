@@ -35,6 +35,7 @@ type Pet {
 
 type Query {
   getAllUsers: [User!]!
+  getOneUser(id: Int!): User!
 }
 
 input RegInput {

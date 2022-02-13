@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { User } from '../auth/entities/user.entity';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UserDeleteInput } from './dto/user-delete-input.dto';
@@ -15,7 +15,7 @@ export class UserResolver {
   @Query(() => [User])
   @UseGuards(JwtAuthGuard)
   async getAllUsers(): Promise<User[]> {
-    return this.userService.getAllUsers();
+    return await this.userService.getAllUsers();
   }
 
   @Mutation(() => UpdateResponse)
@@ -23,7 +23,7 @@ export class UserResolver {
   async UpdateUser(
     @Args('UserUpdateInput') UserUpdateInput: UserUpdateInput,
   ): Promise<UpdateResponse> {
-    return this.userService.UpdateUsers(UserUpdateInput);
+    return await this.userService.UpdateUsers(UserUpdateInput);
   }
 
   @Mutation(() => deleteResponse)
@@ -31,6 +31,12 @@ export class UserResolver {
   async deleteUser(
     @Args('UserdeleteInput') UserdeleteInput: UserDeleteInput,
   ): Promise<deleteResponse> {
-    return this.userService.deleteUser(UserdeleteInput);
+    return await this.userService.deleteUser(UserdeleteInput);
+  }
+
+  @Query(() => User)
+  @UseGuards(JwtAuthGuard)
+  async getOneUser(@Args('id',{type: () => Int})id :number):Promise<User>{
+   return await this.userService.getOneUser(id); 
   }
 }
