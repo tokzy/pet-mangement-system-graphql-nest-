@@ -6,6 +6,7 @@ import { Pet } from './entities/pet.entitiy';
 import { isEmpty } from 'lodash';
 import { updatePetInput } from './dto/update-pet-input.dto';
 import { updatePetResponse } from './dto/update-pet-response.dto';
+import { deletePetResponse } from './dto/delete-pet-response.dto';
 
 @Injectable()
 export class PetsService {
@@ -62,9 +63,22 @@ export class PetsService {
       })
       .catch((err) => {
         throw new HttpException(
-          'unable to update',
+          err,
           HttpStatus.INTERNAL_SERVER_ERROR,
         );
       });
   }
+
+public async deletePets(petId:number):Promise<deletePetResponse>{
+ return this.petRepository.delete(petId).then((res) => {
+   if(res){
+    return {response:"success"} 
+   }else{
+     return {response:"delete failed"}
+   }
+ }).catch((err) => {
+  throw new HttpException(err,HttpStatus.INTERNAL_SERVER_ERROR); 
+ }) 
+}
+
 }

@@ -22,6 +22,7 @@ type Mutation {
   Login(LoginInput: LoginInput!): LoginToken!
   RegisterUser(RegInput: RegInput!): RegResponse!
   UpdateUser(UserUpdateInput: UserUpdateInput!): UpdateResponse!
+  deletePets(id: Int!): deletePetResponse!
   deleteUser(UserdeleteInput: UserDeleteInput!): deleteResponse!
   updatePets(updatePetInput: updatePetInput!): updatePetResponse!
 }
@@ -81,6 +82,10 @@ input UserUpdateInput {
   firstName: String!
   id: Int!
   lastName: String!
+}
+
+type deletePetResponse {
+  response: String!
 }
 
 type deleteResponse {

@@ -1,8 +1,10 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { deleteResponse } from 'src/user/dto/user-delete-response.dto';
 import { UpdateResponse } from 'src/user/dto/user-update-response';
 import { CreatePetInput } from './dto/create-pet-input.dto';
+import { deletePetResponse } from './dto/delete-pet-response.dto';
 import { updatePetInput } from './dto/update-pet-input.dto';
 import { updatePetResponse } from './dto/update-pet-response.dto';
 import { Pet } from './entities/pet.entitiy';
@@ -38,5 +40,11 @@ export class PetsResolver {
     @Args('updatePetInput') updatePetInput: updatePetInput,
   ): Promise<UpdateResponse> {
     return this.petService.updatePets(updatePetInput);
+  }
+
+  @Mutation(() => deletePetResponse)
+  @UseGuards(JwtAuthGuard)
+  async deletePets(@Args('id',{type: ()=> Int}) id :number ):Promise<deleteResponse>{
+   return this.petService.deletePets(id); 
   }
 }
