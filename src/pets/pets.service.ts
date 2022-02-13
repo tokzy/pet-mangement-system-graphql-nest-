@@ -62,23 +62,22 @@ export class PetsService {
         }
       })
       .catch((err) => {
-        throw new HttpException(
-          err,
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
+        throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
       });
   }
 
-public async deletePets(petId:number):Promise<deletePetResponse>{
- return this.petRepository.delete(petId).then((res) => {
-   if(res){
-    return {response:"success"} 
-   }else{
-     return {response:"delete failed"}
-   }
- }).catch((err) => {
-  throw new HttpException(err,HttpStatus.INTERNAL_SERVER_ERROR); 
- }) 
-}
-
+  public async deletePets(petId: number): Promise<deletePetResponse> {
+    return this.petRepository
+      .delete(petId)
+      .then((res) => {
+        if (res) {
+          return { response: 'success' };
+        } else {
+          return { response: 'delete failed' };
+        }
+      })
+      .catch((err) => {
+        throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+      });
+  }
 }

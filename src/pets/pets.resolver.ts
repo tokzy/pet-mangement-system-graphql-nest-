@@ -44,7 +44,9 @@ export class PetsResolver {
 
   @Mutation(() => deletePetResponse)
   @UseGuards(JwtAuthGuard)
-  async deletePets(@Args('id',{type: ()=> Int}) id :number ):Promise<deleteResponse>{
-   return this.petService.deletePets(id); 
+  async deletePets(
+    @Args('id', { type: () => Int }) id: number,
+  ): Promise<deleteResponse> {
+    return this.petService.deletePets(id);
   }
 }
