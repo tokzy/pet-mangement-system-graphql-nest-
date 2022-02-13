@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreatePetInput {
+  petColor: String!
+  petName: String!
+  userId: Float!
+}
+
 input LoginInput {
   password: String!
   phone: String!
@@ -12,6 +18,7 @@ type LoginToken {
 }
 
 type Mutation {
+  CreatePet(CreatePetInput: CreatePetInput!): Pet!
   Login(LoginInput: LoginInput!): LoginToken!
   RegisterUser(RegInput: RegInput!): RegResponse!
   UpdateUser(UserUpdateInput: UserUpdateInput!): UpdateResponse!
