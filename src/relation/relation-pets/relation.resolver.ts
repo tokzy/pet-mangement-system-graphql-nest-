@@ -1,9 +1,9 @@
 import { UseGuards } from '@nestjs/common';
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { User } from '../auth/entities/user.entity';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { Pet } from '../pets/entities/pet.entitiy';
-import { RelationService } from './relation.service';
+import { User } from '../../auth/entities/user.entity';
+import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
+import { Pet } from '../../pets/entities/pet.entitiy';
+import { RelationService } from '../relation.service';
 
 @Resolver((of) => Pet)
 export class RelationResolver {
