@@ -3,6 +3,9 @@ import { Field, ObjectType } from '@nestjs/graphql';
 @ObjectType()
 export class RegResponse {
   @Field()
+  id: number;
+
+  @Field()
   firstName: string;
 
   @Field()

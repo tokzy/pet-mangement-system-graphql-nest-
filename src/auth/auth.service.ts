@@ -95,13 +95,13 @@ export class AuthService {
     return finalPath;
   }
 
-  public async Register(userRegInput: RegInput): Promise<any> {
+  public async Register(userRegInput: RegInput): Promise<User> {
     const { firstName, lastName, email, phone, imagePath, password } =
       userRegInput;
 
     return await this.checkIfUserExists(userRegInput).then(async (check) => {
       if (check == true) {
-        return new HttpException('User Already Exists', HttpStatus.BAD_REQUEST);
+        throw new HttpException('User Already Exists', HttpStatus.BAD_REQUEST);
       } else {
         return await this.hashPassword(password).then(async (password) => {
           return await this.addProfileImage(imagePath).then(

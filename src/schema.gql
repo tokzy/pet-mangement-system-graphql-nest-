@@ -54,6 +54,7 @@ input RegInput {
 type RegResponse {
   email: String!
   firstName: String!
+  id: Float!
   imagePath: String
   lastName: String!
   phone: String!
