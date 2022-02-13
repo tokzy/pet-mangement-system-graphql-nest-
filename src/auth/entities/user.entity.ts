@@ -32,7 +32,7 @@ export class User {
   @Column({ select: false })
   password?: string;
 
-  @OneToMany(() => Pet,pet => pet.user )
-  @Field(() => [Pet],{nullable:true})
-  pets?:Pet[]
+  @OneToMany(() => Pet, (pet) => pet.user)
+  @Field(() => [Pet], { nullable: true })
+  pets?: Pet[];
 }

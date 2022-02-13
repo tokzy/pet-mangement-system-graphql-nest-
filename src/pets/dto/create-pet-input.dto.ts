@@ -1,19 +1,18 @@
-import { Field, InputType } from "@nestjs/graphql";
-import { IsNotEmpty, IsNumber } from "class-validator";
+import { Field, InputType } from '@nestjs/graphql';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 @InputType()
 export class CreatePetInput {
-@Field()
-@IsNotEmpty()
-petName:string;
+  @Field()
+  @IsNotEmpty()
+  petName: string;
 
-@Field()
-@IsNotEmpty()
-petColor:string
+  @Field()
+  @IsNotEmpty()
+  petColor: string;
 
-@Field()
-@IsNotEmpty()
-@IsNumber()
-userId: number
-
+  @Field()
+  @IsNotEmpty()
+  @IsNumber()
+  userId: number;
 }

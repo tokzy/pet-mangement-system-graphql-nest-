@@ -36,7 +36,7 @@ export class UserResolver {
 
   @Query(() => User)
   @UseGuards(JwtAuthGuard)
-  async getOneUser(@Args('id',{type: () => Int})id :number):Promise<User>{
-   return await this.userService.getOneUser(id); 
+  async getOneUser(@Args('id', { type: () => Int }) id: number): Promise<User> {
+    return await this.userService.getOneUser(id);
   }
 }

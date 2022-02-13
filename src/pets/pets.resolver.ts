@@ -7,13 +7,13 @@ import { PetsService } from './pets.service';
 
 @Resolver((of) => Pet)
 export class PetsResolver {
-  constructor(private readonly petService:PetsService){}  
+  constructor(private readonly petService: PetsService) {}
 
-@Mutation(() => Pet)
-@UseGuards(JwtAuthGuard)
-async CreatePet(@Args("CreatePetInput") CreatePetInput: CreatePetInput):Promise<Pet>{
-return this.petService.CreatePets(CreatePetInput);
-}
-
-
+  @Mutation(() => Pet)
+  @UseGuards(JwtAuthGuard)
+  async CreatePet(
+    @Args('CreatePetInput') CreatePetInput: CreatePetInput,
+  ): Promise<Pet> {
+    return this.petService.CreatePets(CreatePetInput);
+  }
 }

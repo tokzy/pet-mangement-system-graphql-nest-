@@ -13,15 +13,15 @@ export class Pet {
   @Column()
   petName: string;
 
-  @Field({nullable:true})
-  @Column({nullable:true})
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   petColor: string;
 
   @Field(() => Int)
   @Column()
-  userId: number
+  userId: number;
 
-  @ManyToOne(() => User,user => user.pets)
-  @Field(() => User,{nullable:true})
-  user?:User
+  @ManyToOne(() => User, (user) => user.pets)
+  @Field(() => User, { nullable: true })
+  user?: User;
 }
