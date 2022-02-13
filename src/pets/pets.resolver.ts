@@ -1,13 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import {
-  Args,
-  Int,
-  Mutation,
-  Parent,
-  Query,
-  ResolveField,
-  Resolver,
-} from '@nestjs/graphql';
+import { Args, Int, Mutation, Parent, Query, Resolver } from '@nestjs/graphql';
 import { User } from 'src/auth/entities/user.entity';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreatePetInput } from './dto/create-pet-input.dto';
@@ -24,12 +16,6 @@ export class PetsResolver {
     @Args('CreatePetInput') CreatePetInput: CreatePetInput,
   ): Promise<Pet> {
     return await this.petService.CreatePets(CreatePetInput);
-  }
-
-  @ResolveField(() => User)
-  @UseGuards(JwtAuthGuard)
-  async user(@Parent() pet: Pet): Promise<User> {
-    return await this.petService.getOneUser(pet.userId);
   }
 
   @Query(() => [Pet])

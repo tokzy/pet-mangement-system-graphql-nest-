@@ -36,10 +36,6 @@ export class PetsService {
     });
   }
 
-  public async getOneUser(userId: number): Promise<User> {
-    return this.userService.getOneUser(userId);
-  }
-
   public async getAllPets(): Promise<Pet[]> {
     return await this.petRepository.find();
   }
