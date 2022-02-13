@@ -36,9 +36,9 @@ export class PetsService {
   public async getAllPets(): Promise<Pet[]> {
     return await this.petRepository.find();
   }
-  
-  public async getAllPetsPerUser(userId:number): Promise<Pet[]> {
-    return await this.petRepository.find({userId:userId});
+
+  public async getAllPetsPerUser(userId: number): Promise<Pet[]> {
+    return await this.petRepository.find({ userId: userId });
   }
 
   public async getSinglePet(petId: number): Promise<Pet> {

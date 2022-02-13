@@ -15,8 +15,7 @@ export class RelationService {
     return this.userService.getOneUser(userId);
   }
 
-  public async pets(userId:number):Promise<Pet[]>{
-     return this.petService.getAllPetsPerUser(userId); 
+  public async pets(userId: number): Promise<Pet[]> {
+    return this.petService.getAllPetsPerUser(userId);
   }
-
 }

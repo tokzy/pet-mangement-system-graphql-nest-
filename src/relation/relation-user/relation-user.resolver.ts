@@ -7,7 +7,7 @@ import { RelationService } from '../relation.service';
 
 @Resolver((of) => User)
 export class RelationUserResolver {
-  constructor(private readonly relationUserService:RelationService){}  
+  constructor(private readonly relationUserService: RelationService) {}
 
   @ResolveField(() => [Pet])
   @UseGuards(JwtAuthGuard)
