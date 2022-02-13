@@ -4,14 +4,11 @@ import { Repository } from 'typeorm';
 import { CreatePetInput } from './dto/create-pet-input.dto';
 import { Pet } from './entities/pet.entitiy';
 import { isEmpty } from 'lodash';
-import { UserService } from '../user/user.service';
-import { User } from 'src/auth/entities/user.entity';
 
 @Injectable()
 export class PetsService {
   constructor(
     @InjectRepository(Pet) private readonly petRepository: Repository<Pet>,
-    private readonly userService: UserService,
   ) {}
 
   public async checkIfPetExists(petName: string): Promise<boolean> {
@@ -38,6 +35,10 @@ export class PetsService {
 
   public async getAllPets(): Promise<Pet[]> {
     return await this.petRepository.find();
+  }
+  
+  public async getAllPetsPerUser(userId:number): Promise<Pet[]> {
+    return await this.petRepository.find({userId:userId});
   }
 
   public async getSinglePet(petId: number): Promise<Pet> {
