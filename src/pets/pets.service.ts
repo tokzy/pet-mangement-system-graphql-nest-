@@ -36,16 +36,15 @@ export class PetsService {
     });
   }
 
-  public async getOneUser(userId:number):Promise<User>{
-     return this.userService.getOneUser(userId); 
+  public async getOneUser(userId: number): Promise<User> {
+    return this.userService.getOneUser(userId);
   }
 
- public async getAllPets():Promise<Pet[]>{
- return await this.petRepository.find();
- } 
+  public async getAllPets(): Promise<Pet[]> {
+    return await this.petRepository.find();
+  }
 
-public async getSinglePet(petId: number):Promise<Pet>{
+  public async getSinglePet(petId: number): Promise<Pet> {
     return await this.petRepository.findOne(petId);
-}
-
+  }
 }

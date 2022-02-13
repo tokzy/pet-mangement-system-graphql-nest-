@@ -6,6 +6,7 @@ import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { PetsModule } from './pets/pets.module';
+import { RelationModule } from './relation/relation.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { PetsModule } from './pets/pets.module';
     AuthModule,
     UserModule,
     PetsModule,
+    RelationModule,
   ],
   controllers: [],
   providers: [],
