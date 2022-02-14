@@ -59,23 +59,21 @@ describe('AuthResolver', () => {
     });
   });
 
-describe('RegisterUser', () => {
-describe('when RegisterUser is called', () => {
-let userReg:User
+  describe('RegisterUser', () => {
+    describe('when RegisterUser is called', () => {
+      let userReg: User;
 
-beforeEach(async () => {
-userReg = await resolver.RegisterUser(mockRegInput());
-});
+      beforeEach(async () => {
+        userReg = await resolver.RegisterUser(mockRegInput());
+      });
 
-test('then it should call authservice',() => {
-expect(authservice.Register).toBeCalledWith(mockRegInput());
-});
+      test('then it should call authservice', () => {
+        expect(authservice.Register).toBeCalledWith(mockRegInput());
+      });
 
-test("it should return new registered user object",() => {
-expect(userReg).toEqual(mockRegResponse());
-});
-
-});
-});
-
+      test('it should return new registered user object', () => {
+        expect(userReg).toEqual(mockRegResponse());
+      });
+    });
+  });
 });
