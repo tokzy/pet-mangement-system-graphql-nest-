@@ -6,6 +6,9 @@ import { mockLoginInput } from './dto/stub/login-input.mock.dto';
 import { GqlAuthGuard } from './guards/gql-auth.guards';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { mockLoginResponse } from './dto/stub/login-response.mock.dto';
+import { User } from './entities/user.entity';
+import { mockRegInput } from './dto/stub/register-input.mock.dto';
+import { mockRegResponse } from './dto/stub/register-response.mock.dto';
 
 jest.mock('./auth.service');
 
@@ -55,4 +58,24 @@ describe('AuthResolver', () => {
       });
     });
   });
+
+describe('RegisterUser', () => {
+describe('when RegisterUser is called', () => {
+let userReg:User
+
+beforeEach(async () => {
+userReg = await resolver.RegisterUser(mockRegInput());
+});
+
+test('then it should call authservice',() => {
+expect(authservice.Register).toBeCalledWith(mockRegInput());
+});
+
+test("it should return new registered user object",() => {
+expect(userReg).toEqual(mockRegResponse());
+});
+
+});
+});
+
 });
