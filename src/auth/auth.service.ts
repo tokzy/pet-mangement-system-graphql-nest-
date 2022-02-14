@@ -20,7 +20,7 @@ export class AuthService {
     private jwtservice: JwtService,
   ) {}
 
-  private async hashPassword(password: string): Promise<string> {
+  public async hashPassword(password: string): Promise<string> {
     return await bcrypt.hash(password, 12);
   }
 
@@ -76,7 +76,7 @@ export class AuthService {
     });
   }
 
-  private async addProfileImage(imageString: string): Promise<string> {
+  public async addProfileImage(imageString: string): Promise<string> {
     const directory = process.cwd() + '/public/images';
     let newPath: string;
     let imageName: string;
