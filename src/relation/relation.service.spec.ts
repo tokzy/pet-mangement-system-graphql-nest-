@@ -1,12 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RelationService } from './relation.service';
 
+jest.mock('./relation.service');
+
 describe('RelationService', () => {
   let service: RelationService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [RelationService],
+      providers: [RelationService,],
     }).compile();
 
     service = module.get<RelationService>(RelationService);
