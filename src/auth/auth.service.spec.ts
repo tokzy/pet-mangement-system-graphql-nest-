@@ -1,10 +1,12 @@
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { AuthService } from './auth.service';
 import { LoginToken } from './dto/logintoken.dto';
 import { mockLoginInput } from './dto/stub/login-input.mock.dto';
 import { mockLoginResponse } from './dto/stub/login-response.mock.dto';
+import { mockRegInput } from './dto/stub/register-input.mock.dto';
 import { mockUserInput } from './dto/stub/user-input.dto';
 import { User } from './entities/user.entity';
 import { GqlAuthGuard } from './guards/gql-auth.guards';
@@ -12,21 +14,15 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 jest.mock('./auth.service');
 
+
 describe('AuthService', () => {
   let service: AuthService;
-
-  const userRepository = jest.fn().mockReturnValue({
-    findOne: jest.fn().mockResolvedValue(mockUserInput()),
-  });
+  let userRepository: Repository<User>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
-        {
-          provide: getRepositoryToken(User),
-          useValue: userRepository,
-        },
         {
           provide: JwtService,
           useValue: jest.fn().mockImplementation(() => true),
@@ -39,15 +35,27 @@ describe('AuthService', () => {
           provide: JwtAuthGuard,
           useValue: jest.fn().mockImplementation(() => true),
         },
+        {
+          provide: getRepositoryToken(User),
+          useValue: {
+           findOne :jest.fn().mockResolvedValue(mockUserInput),
+          }
+        },
       ],
     }).compile();
 
     service = module.get<AuthService>(AuthService);
+    userRepository = module.get<Repository<User>>(getRepositoryToken(User));
+    
     jest.clearAllMocks();
   });
 
-  it('should be defined', () => {
+  it('authservice should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('userRepository should be defined', () => {
+    expect(userRepository).toBeDefined();
   });
 
   describe('hashPassword', () => {
@@ -106,6 +114,24 @@ describe('AuthService', () => {
       test('it should return user object', () => {
         expect(validateUser).toEqual(mockUserInput());
       });
+
     });
   });
+
+describe("checkIfUserExists",() => {
+describe('when checkifUserExists method is called',() =>{
+ let check: boolean;
+ 
+ beforeEach(async () => {
+ check = await service.checkIfUserExists(mockRegInput());
+ });
+
+test("it should be called with ",() => {
+  expect(service.checkIfUserExists).toBeCalledWith(mockRegInput());
+})
+
+})
+});
+  
+
 });

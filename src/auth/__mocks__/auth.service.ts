@@ -8,5 +8,7 @@ export const AuthService = jest.fn().mockReturnValue({
   Register: jest.fn().mockResolvedValue(mockRegResponse()),
   hashPassword: jest.fn().mockResolvedValue(expect.any(String)),
   validateUser: jest.fn().mockResolvedValue(mockUserInput()),
-  jwtservice: jest.fn().mockResolvedValue(expect.any(String)),
+  checkIfUserExists: jest.fn().mockResolvedValue(true||false),
+
+
 });
