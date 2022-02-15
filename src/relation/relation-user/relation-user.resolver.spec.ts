@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { Pet } from 'src/pets/entities/pet.entitiy';
 import { RelationService } from '../relation.service';
 import { RelationUserResolver } from './relation-user.resolver';
 
@@ -25,5 +26,23 @@ describe('RelationUserResolver', () => {
    expect(relationservice).toBeDefined(); 
   });
 
-  
+  describe('pets',() => {
+  describe('when pets is called',() => {
+  let pets:Pet[];
+  beforeEach(async () => {
+  pets = await relationservice.pets(expect.any(Number));
+  });
+
+  test('it should be called with user Id',() => {
+  expect(relationservice.pets).toBeCalledWith(expect.any(Number));
+  });
+
+  test('it should return an array of pets',() => {
+  expect(pets).toEqual(expect.any(Array));
+  });
+
+  });
+
+  });
+
 });
