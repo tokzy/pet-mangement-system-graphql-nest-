@@ -6,6 +6,7 @@ export const mockRegInput = (): RegInput => {
     lastName: 'tom',
     email: 'testom@gmail.com',
     phone: '09025652652',
+    imagePath: 'abnbbsnbnsbnbsnbnsbnb',
     password: 'test205',
   };
 };

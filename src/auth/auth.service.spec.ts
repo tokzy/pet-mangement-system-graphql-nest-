@@ -14,7 +14,6 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 jest.mock('./auth.service');
 
-
 describe('AuthService', () => {
   let service: AuthService;
   let userRepository: Repository<User>;
@@ -38,15 +37,15 @@ describe('AuthService', () => {
         {
           provide: getRepositoryToken(User),
           useValue: {
-           findOne :jest.fn().mockResolvedValue(mockUserInput),
-          }
+            findOne: jest.fn().mockResolvedValue(mockUserInput),
+          },
         },
       ],
     }).compile();
 
     service = module.get<AuthService>(AuthService);
     userRepository = module.get<Repository<User>>(getRepositoryToken(User));
-    
+
     jest.clearAllMocks();
   });
 
@@ -114,24 +113,41 @@ describe('AuthService', () => {
       test('it should return user object', () => {
         expect(validateUser).toEqual(mockUserInput());
       });
-
     });
   });
 
-describe("checkIfUserExists",() => {
-describe('when checkifUserExists method is called',() =>{
- let check: boolean;
- 
- beforeEach(async () => {
- check = await service.checkIfUserExists(mockRegInput());
- });
+  describe('checkIfUserExists', () => {
+    describe('when checkifUserExists method is called', () => {
+      let check: boolean;
 
-test("it should be called with ",() => {
-  expect(service.checkIfUserExists).toBeCalledWith(mockRegInput());
-})
+      beforeEach(async () => {
+        check = await service.checkIfUserExists(mockRegInput());
+      });
 
-})
-});
-  
+      test('it should be called with ', () => {
+        expect(service.checkIfUserExists).toBeCalledWith(mockRegInput());
+      });
+      test('it should return a boolean', () => {
+        expect(check).toEqual(true || false);
+      });
+    });
+  });
 
+  describe('addProfileImage', () => {
+    describe('when addProfileImage is called', () => {
+      let addprofile: string;
+
+      beforeEach(async () => {
+        addprofile = await service.addProfileImage(expect.any(String));
+      });
+
+      test('it should be called with', () => {
+        expect(service.addProfileImage).toBeCalledWith(expect.any(String));
+      });
+
+      test('its should return string', () => {
+        expect(addprofile).toEqual(expect.any(String));
+      });
+    });
+  });
 });
