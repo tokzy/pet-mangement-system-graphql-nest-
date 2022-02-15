@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { Pet } from 'src/pets/entities/pet.entitiy';
+import { Pet } from '../../pets/entities/pet.entitiy';
 import { User } from '../../auth/entities/user.entity';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { RelationService } from '../relation.service';
