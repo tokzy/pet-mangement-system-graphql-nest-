@@ -1,8 +1,8 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { deleteResponse } from 'src/user/dto/user-delete-response.dto';
-import { UpdateResponse } from 'src/user/dto/user-update-response';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { deleteResponse } from '../user/dto/user-delete-response.dto';
+import { UpdateResponse } from '../user/dto/user-update-response';
 import { CreatePetInput } from './dto/create-pet-input.dto';
 import { deletePetResponse } from './dto/delete-pet-response.dto';
 import { updatePetInput } from './dto/update-pet-input.dto';
