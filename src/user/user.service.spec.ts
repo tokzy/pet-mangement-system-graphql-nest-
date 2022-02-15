@@ -10,16 +10,17 @@ describe('UserService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [UserService,
-      {
-      provide: getRepositoryToken(User),
-      useValue: {
-       find: jest.fn().mockImplementation(() => true),
-       update: jest.fn().mockImplementation(() => true),
-       delete: jest.fn().mockImplementation(() => true),
-       findOne: jest.fn().mockImplementation(() => true),
-      } 
-      }
+      providers: [
+        UserService,
+        {
+          provide: getRepositoryToken(User),
+          useValue: {
+            find: jest.fn().mockImplementation(() => true),
+            update: jest.fn().mockImplementation(() => true),
+            delete: jest.fn().mockImplementation(() => true),
+            findOne: jest.fn().mockImplementation(() => true),
+          },
+        },
       ],
     }).compile();
 
@@ -34,7 +35,4 @@ describe('UserService', () => {
   it('usersRepository should be defined', () => {
     expect(usersRepository).toBeDefined();
   });
-  
-
-
 });
