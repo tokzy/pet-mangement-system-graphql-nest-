@@ -18,4 +18,6 @@ export const PetsService = jest.fn().mockReturnValue({
   deletePets: jest.fn().mockResolvedValue({
     response: expect.any(String),
   }),
+  checkIfPetExists: jest.fn().mockResolvedValue(true || false),
+  getAllPetsPerUser: jest.fn().mockResolvedValue(expect.any(Array)),
 });
