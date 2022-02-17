@@ -83,7 +83,7 @@ describe('UserResolver', () => {
         deleteuser = await userservice.deleteUser(expect.any(Number));
       });
 
-      test('it should be called with', () => {
+      test('it should be called with user Id', () => {
         expect(userservice.deleteUser).toBeCalledWith(expect.any(Number));
       });
 
